@@ -6,6 +6,10 @@ import { PostResponse, PostData } from './index';
 
 export const loader: LoaderFunction = async () => {
   const response = await fetch(`${process.env.STRAPI_URL_BASE}/api/posts`);
+  if (!response.ok) {
+    console.log('Error');
+    throw new Response('Error getting data from Strapi', { status: 500 });
+  }
   const postResponse = (await response.json()) as PostResponse;
   return json(
     postResponse.data.map((post) => ({

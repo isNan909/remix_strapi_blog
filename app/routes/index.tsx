@@ -25,6 +25,10 @@ export type PostResponse = {
 
 export const loader: LoaderFunction = async () => {
   const response = await fetch(`${process.env.STRAPI_URL_BASE}/api/posts`);
+  if (!response.ok) {
+    console.log('Error');
+    throw new Response('Error getting data from Strapi', { status: 500 });
+  }
   const postResponse = (await response.json()) as PostResponse;
   const firstFivePosts = postResponse.data.slice(0, 5);
   return json(

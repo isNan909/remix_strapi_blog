@@ -3,7 +3,6 @@ import { LoaderFunction, json } from '@remix-run/node';
 import Layout from '~/components/layout';
 import { marked } from 'marked';
 
-
 type PostDetails = {
   data: Data;
   meta: Meta;
@@ -29,6 +28,11 @@ export const loader: LoaderFunction = async ({ params }) => {
   const fetchData = await fetch(
     `${process.env.STRAPI_URL_BASE}/api/posts/${params.postId}`
   );
+  if (!fetchData.ok) {
+    console.log('Error');
+    throw new Response('Error getting data from Strapi', { status: 500 });
+  }
+
   const response = await fetchData.json();
   return json({
     data: {
@@ -36,9 +40,9 @@ export const loader: LoaderFunction = async ({ params }) => {
       attributes: {
         title: response.data.attributes.title,
         article: marked(response.data.attributes.article),
-      }
-    }
-  })
+      },
+    },
+  });
 };
 
 export default function Index() {
