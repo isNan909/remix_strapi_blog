@@ -1,7 +1,8 @@
 import { useLoaderData, Link } from '@remix-run/react';
-import { LoaderFunction } from '@remix-run/node';
-
+import { LoaderFunction, json } from '@remix-run/node';
 import Layout from '~/components/layout';
+import { marked } from 'marked';
+
 
 type PostDetails = {
   data: Data;
@@ -29,7 +30,15 @@ export const loader: LoaderFunction = async ({ params }) => {
     `${process.env.STRAPI_URL_BASE}/api/posts/${params.postId}`
   );
   const response = await fetchData.json();
-  return response;
+  return json({
+    data: {
+      id: response.data.id,
+      attributes: {
+        title: response.data.attributes.title,
+        article: marked(response.data.attributes.article),
+      }
+    }
+  })
 };
 
 export default function Index() {
@@ -41,7 +50,10 @@ export default function Index() {
         <Link to="/">Go back</Link>
       </span>
       {title}
-      {article}
+      <br />
+      {/* Reminder that this can in fact be dangerous
+      https://reactjs.org/docs/dom-elements.html#dangerouslysetinnerhtml */}
+      <div dangerouslySetInnerHTML={{ __html: article }} />
     </Layout>
   );
 }
