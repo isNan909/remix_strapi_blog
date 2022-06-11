@@ -1,34 +1,14 @@
 import { LoaderFunction, json } from '@remix-run/node';
 import { useLoaderData, Link } from '@remix-run/react';
-import { marked } from 'marked';
-import * as React from 'react';
 import Layout from '~/components/layout';
-
-export type Post = {
-  title: string;
-  article: string;
-};
-
-export type PostData = { id: string; attributes: Post }[];
-
-export type PostResponse = {
-  data: PostData;
-  meta: {
-    pagination: {
-      page: number;
-      pageSize: number;
-      pageCount: number;
-      total: number;
-    };
-  };
-};
+import { marked } from 'marked';
+import { PostResponse, PostData } from './index';
 
 export const loader: LoaderFunction = async () => {
   const response = await fetch(`${process.env.STRAPI_URL_BASE}/api/posts`);
   const postResponse = (await response.json()) as PostResponse;
-  const firstFivePosts = postResponse.data.slice(0, 5);
   return json(
-    firstFivePosts.map((post) => ({
+    postResponse.data.map((post) => ({
       ...post,
       attributes: {
         ...post.attributes,
@@ -38,29 +18,30 @@ export const loader: LoaderFunction = async () => {
   );
 };
 
-const Posts: React.FC = () => {
-  const posts = useLoaderData<PostData>();
+const Allpost: React.FC = () => {
+  const Allposts = useLoaderData<PostData>();
   return (
     <Layout>
-      {posts?.map((post) => {
+      <h1>All posts</h1>
+      {Allposts?.map((post) => {
         const { title, article } = post.attributes;
         return (
           <article key={post.id}>
             <div>
-              <Link to={post.id.toString()}>
+              <Link to={'/'+ post.id.toString()}>
                 <h1>{title}</h1>
+                <br />
                 {/* Reminder that this can in fact be dangerous
                 https://reactjs.org/docs/dom-elements.html#dangerouslysetinnerhtml */}
                 <div dangerouslySetInnerHTML={{ __html: article }} />
               </Link>
             </div>
+            <br /><br />
           </article>
         );
       })}
-      <button>
-        <Link to="/all_post">All blogs</Link>
-      </button>
     </Layout>
   );
 };
-export default Posts;
+
+export default Allpost;

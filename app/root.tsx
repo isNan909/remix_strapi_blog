@@ -1,14 +1,20 @@
 import type { MetaFunction } from "@remix-run/node";
-import { Links, LiveReload, Meta, Outlet } from "@remix-run/react";
-import * as React from "react";
+import {
+  Links,
+  LiveReload,
+  Meta,
+  Outlet,
+  Scripts,
+  ScrollRestoration,
+} from "@remix-run/react";
 
 export const meta: MetaFunction = () => ({
   charset: "utf-8",
-  title: "Remix & Strapi",
+  title: "Personal Blog App",
   viewport: "width=device-width,initial-scale=1",
 });
 
-const App: React.FC = () => {
+export default function App() {
   return (
     <html lang="en">
       <head>
@@ -17,9 +23,10 @@ const App: React.FC = () => {
       </head>
       <body>
         <Outlet />
+        <ScrollRestoration />
+        <Scripts />
         <LiveReload />
       </body>
     </html>
   );
-};
-export default App;
+}
