@@ -24,7 +24,6 @@ type Attributes = {
 type Meta = {};
 
 export const loader: LoaderFunction = async ({ params }) => {
-  console.log(params, 'params');
   const fetchData = await fetch(
     `${process.env.STRAPI_URL_BASE}/api/posts/${params.postId}`
   );
