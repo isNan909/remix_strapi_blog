@@ -47,11 +47,14 @@ export const loader: LoaderFunction = async ({ params }) => {
 export default function Index() {
   const postDetail: PostDetails = useLoaderData();
   const { title, article } = postDetail.data.attributes;
+
+  const goBack = () => {
+    history.back();
+  };
+
   return (
     <Layout>
-      <span>
-        <Link to="/">Go back</Link>
-      </span>
+      <span onClick={goBack}>Go back</span>
       {title}
       <br />
       {/* Reminder that this can in fact be dangerous
