@@ -4,7 +4,8 @@
   "info": {
     "singularName": "about-me",
     "pluralName": "about-mes",
-    "displayName": "about-me"
+    "displayName": "about-me",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true
@@ -13,16 +14,6 @@
   "attributes": {
     "details": {
       "type": "richtext"
-    },
-    "image": {
-      "allowedTypes": [
-        "images",
-        "files",
-        "videos",
-        "audios"
-      ],
-      "type": "media",
-      "multiple": true
     }
   }
 }

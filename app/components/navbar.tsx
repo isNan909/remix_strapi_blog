@@ -4,7 +4,7 @@ const Navbar: React.FC = () => {
   return (
     <>
       <div className="relative bg-white">
-        <div className="max-w-7xl mx-auto mb-20">
+        <div className="max-w-7xl mx-auto mb-[80px]">
           <div className="flex justify-between items-center border-b-2 border-gray-100 py-4 md:justify-start md:space-x-10">
             <div>
               <Link to="/">
@@ -31,29 +31,15 @@ const Navbar: React.FC = () => {
               </Link>
             </div>
             <div className="md:flex items-center justify-end md:flex-1 lg:w-0">
-              <Link to="/">
-              <a
-                href="#"
-                className="whitespace-nowrap text-base font-medium pr-5 text-gray-500 hover:text-gray-900"
-              >
-                Home
-              </a>
-              </Link>
-              <a
-                href="#"
-                className="whitespace-nowrap text-base font-medium pr-5 text-gray-500 hover:text-gray-900"
-              >
-                <Link to="/about">
-                About
-                </Link>
-
-              </a>
-              <a
-                href="#"
-                className="whitespace-nowrap text-base font-medium text-gray-500 hover:text-gray-900"
-              >
-                Posts
-              </a>
+              <p className="whitespace-nowrap text-base font-medium pr-5 text-gray-500 hover:text-gray-900">
+                <Link to="/">Home</Link>
+              </p>
+              <p className="whitespace-nowrap text-base font-medium pr-5 text-gray-500 hover:text-gray-900">
+                <Link to="/about-me">About</Link>
+              </p>
+              <p className="whitespace-nowrap text-base font-medium text-gray-500 hover:text-gray-900">
+                <Link to="/all_post">All Posts</Link>
+              </p>
             </div>
           </div>
         </div>

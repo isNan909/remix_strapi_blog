@@ -1,9 +1,10 @@
-import { useLoaderData } from '@remix-run/react';
 import { LoaderFunction, json } from '@remix-run/node';
+import { useLoaderData } from '@remix-run/react';
 import Layout from '~/components/layout';
+import * as React from 'react';
 import { marked } from 'marked';
 
-interface PostDetails {
+interface About {
   data: Data;
   meta: Meta;
 }
@@ -14,8 +15,7 @@ interface Data {
 }
 
 interface Attributes {
-  title: string;
-  article: string;
+  details: string;
   createdAt: Date;
   updatedAt: Date;
   publishedAt: Date;
@@ -23,43 +23,35 @@ interface Attributes {
 
 interface Meta {}
 
-export const loader: LoaderFunction = async ({ params }) => {
-  const fetchData = await fetch(
-    `${process.env.STRAPI_URL_BASE}/api/posts/${params.postId}`
-  );
+export const loader: LoaderFunction = async () => {
+  const fetchData = await fetch(`${process.env.STRAPI_URL_BASE}/api/about-me`);
   if (!fetchData.ok) {
     console.log('Error');
     throw new Response('Error getting data from Strapi', { status: 500 });
   }
-
   const response = await fetchData.json();
   return json({
     data: {
       id: response.data.id,
       attributes: {
-        title: response.data.attributes.title,
-        article: marked(response.data.attributes.article),
+        details: marked(response.data.attributes.details),
       },
     },
   });
 };
 
-export default function Index() {
-  const postDetail: PostDetails = useLoaderData();
-  const { title, article } = postDetail.data.attributes;
-
-  const goBack = () => {
-    history.back();
-  };
-
+const Posts: React.FC = () => {
+  const aboutMe: About = useLoaderData<About>();
+  const { details } = aboutMe?.data?.attributes;
   return (
     <Layout>
-      <span onClick={goBack}>Go back</span>
-      {title}
-      <br />
+      <h1 className="mb-[80px] text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl">
+        About me
+      </h1>
       {/* Reminder that this can in fact be dangerous
       https://reactjs.org/docs/dom-elements.html#dangerouslysetinnerhtml */}
-      <div dangerouslySetInnerHTML={{ __html: article }} />
+      <div dangerouslySetInnerHTML={{ __html: details }} />
     </Layout>
   );
-}
+};
+export default Posts;
