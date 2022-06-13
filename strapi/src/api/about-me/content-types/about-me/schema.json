@@ -1,17 +1,17 @@
 {
-  "kind": "collectionType",
-  "collectionName": "abouts",
+  "kind": "singleType",
+  "collectionName": "about_mes",
   "info": {
-    "singularName": "about",
-    "pluralName": "abouts",
-    "displayName": "about"
+    "singularName": "about-me",
+    "pluralName": "about-mes",
+    "displayName": "about-me"
   },
   "options": {
     "draftAndPublish": true
   },
   "pluginOptions": {},
   "attributes": {
-    "description": {
+    "details": {
       "type": "richtext"
     },
     "image": {
@@ -22,7 +22,7 @@
         "audios"
       ],
       "type": "media",
-      "multiple": false
+      "multiple": true
     }
   }
 }

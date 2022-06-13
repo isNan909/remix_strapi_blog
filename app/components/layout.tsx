@@ -1,14 +1,7 @@
 const Layout = ({ children }: any) => {
   return (
     <>
-      <div
-        style={{
-          maxWidth: '600px',
-          margin: '0 auto',
-          display: 'flex',
-          flexDirection: 'column',
-        }}
-      >
+      <div className="max-w-2xl mx-auto">
         <div>{children}</div>
       </div>
     </>

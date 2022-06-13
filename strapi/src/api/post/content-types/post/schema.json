@@ -17,6 +17,10 @@
     },
     "article": {
       "type": "text"
+    },
+    "description": {
+      "type": "string",
+      "maxLength": 340
     }
   }
 }
