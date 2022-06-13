@@ -1,9 +1,8 @@
-import { LoaderFunction, json } from '@remix-run/node';
+import { LoaderFunction } from '@remix-run/node';
 import { useLoaderData, Link } from '@remix-run/react';
 import * as React from 'react';
 import Layout from '~/components/layout';
 import IntroHomepage from '~/components/intro';
-import Contact from '~/components/contact';
 
 export type Post = {
   title: string;
@@ -56,7 +55,6 @@ const Posts: React.FC = () => {
       <button>
         <Link to="/all_post">All blogs</Link>
       </button>
-      <Contact />
     </Layout>
   );
 };
